@@ -53,19 +53,28 @@ class ProductManager{
         }
     }
 
-    getProducts = async function(){
-        const Data = await readFile(this.path);
-        return Data;
+    getProducts = async function(limit){
+        
+        if (limit == undefined){
+            const data = await readFile(this.path)
+            return data
+    
+        } else {
+            const {products} =  await readFile (this.path);
+            const arrayFiltrado = products.slice(0,limit)
+            return arrayFiltrado
+        }
     }
 
     getProductById = async (id)=>{
-        const { products } = await readFile(this.path);
+        const { products}  = await readFile(this.path);
+        
         const ProductId = products.find((product)=> product.id === id);
        
         if (ProductId){
               return ProductId
         } else{
-            console.log("Producto no Encontrado")
+            
             return null
         }
     }
@@ -100,65 +109,4 @@ class ProductManager{
 }          
 
 module.exports = ProductManager;
-
-/*          
-////////// Inicio //////////
-const Inicio= async ()=>{
-
-    const Product = new ProductManager("./assets/product.json")
-    await Product.CreateFile();
-    let products = await Product.getProducts();
-    console.log(products)
-   
-   
-    const Product1 = {
-        title: "Titulo Prueba 1",
-        description: "Descripcion Prueba 1",
-        price: "Precio Prueba 1",
-        thumbnail: "Enlase prueba 1",
-        code: "Cod1",
-        stock: "10"
-    };
-    const Product2 = {
-        title: "Titulo Prueba 2",
-        description: "Descripcion Prueba 2",
-        price: "Precio Prueba 2",
-        thumbnail: "Enlase prueba 2",
-        code: "Cod2",
-        stock: "10"
-    };
-    await Product.addProduct(Product1)
-    await Product.addProduct(Product2)
-    products = await Product.getProducts();
-    console.log(products);
-   
-    await Product.getProductById(5)
-
-
-    const ProductoUpgrade = {
-        title: "Titulo Actualizado",
-        description: "Descripcion Actualizado",
-        price: "Precio Actualizado",
-        thumbnail: "Enlase Actualizado",
-        code: "Cod1",
-        stock: "10 Actualizado"
-    }
-    await Product.UpdateProduct(1, ProductoUpgrade);
-    products = await Product.getProducts();
-    console.log(products);
-
-    await Product.deleteProduct(1);
-    products = await Product.getProducts();
-    console.log(products);
-
-}
-Inicio()
-
-*/
-
-
-
-
-
-
 
