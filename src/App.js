@@ -22,7 +22,6 @@ server.get("/product/:pid", async (req , res)=>{
     const pid = req.params.pid
     let product = await Product.getProductById(pid);
      if (product == null ){
-        console.log(product)
         res.send("product no encontrado")    
      } else{
          res.send(product)  
