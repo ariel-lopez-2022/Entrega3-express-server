@@ -24,8 +24,10 @@ server.get("/product/:pid", async (req , res)=>{
      if (product == null ){
         console.log(product)
         res.send("product no encontrado")    
-     } 
-     res.send(product)  
+     } else{
+         res.send(product)  
+
+     }
     
 })
 
